@@ -114,13 +114,16 @@ app.get('/classement', async (req, res) => {
         });
 
         const maps = response.data.data.mappack.maps;
-        console.log(maps);
         // Créer un tableau de promesses pour les requêtes imbriquées
-        const mapDetailsPromises = maps.map(async map => {
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        const mapDetailsPromises = maps.map(async (map, index) => {
+            await sleep(index * 100);
             try {
                 const mapResponse = await axios.post('https://obstacle.titlepack.io/api/graphql', {
                     query: `{
-                        map(gameId: "k8pnz4nrME6CuBRWvk2THdlSMrl_benchmark") {
+                        map(gameId: "${map.mapId}") {
                           name
                           gameId
                           records {
