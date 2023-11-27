@@ -117,34 +117,47 @@ app.get('/classement', async (req, res) => {
 
         // Créer un tableau de promesses pour les requêtes imbriquées
         const mapDetailsPromises = maps.map(async map => {
-            const mapResponse = await axios.post('https://obstacle.titlepack.io/api/graphql', {
-                query: `{
-                    map(gameId: "${map.mapId}") {
-                      name
-                      gameId
-                      player {
-                        login
-                        name
-                      }
-                      records {
-                        rank
-                        time
-                        recordDate
-                        player {
-                          login
+            try {
+                const mapResponse = await axios.post('https://obstacle.titlepack.io/api/graphql', {
+                    query: `{
+                        map(gameId: "${map.mapId}") {
                           name
+                          gameId
+                          player {
+                            login
+                            name
+                          }
+                          records {
+                            rank
+                            time
+                            recordDate
+                            player {
+                              login
+                              name
+                            }
+                          }
                         }
-                      }
+                      }`
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     }
-                  }`
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                });
+        
+                // Vérifiez si `data` et `map` sont présents
+                if (mapResponse.data && mapResponse.data.data && mapResponse.data.data.map) {
+                    return mapResponse.data.data.map;
+                } else {
+                    throw new Error('La réponse ne contient pas les données attendues');
                 }
-            });
-            return mapResponse.data.data.map; // Retourner les détails de chaque map
+            } catch (error) {
+                console.error('Erreur lors de la récupération des détails de la carte :', error);
+                // Retournez `null` ou une autre valeur appropriée qui indiquera une erreur lors du traitement de cette carte
+                return null;
+            }
         });
+        
 
         // Attendre que toutes les promesses soient résolues
         const mapsDetails = await Promise.all(mapDetailsPromises);
