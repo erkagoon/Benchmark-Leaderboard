@@ -114,7 +114,7 @@ app.get('/classement', async (req, res) => {
         });
 
         const maps = response.data.data.mappack.maps;
-
+        console.log(maps);
         // Créer un tableau de promesses pour les requêtes imbriquées
         const mapDetailsPromises = maps.map(async map => {
             try {
