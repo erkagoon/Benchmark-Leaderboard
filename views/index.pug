@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    h1= title
+    div.global
+        img(src='/img/ball-triangle.svg', width= 100, alt='loader' id='loader')
+        span(id='spanLoader') Go rj, wj, rwj, ej, boot, hippe and make the futur...
+        div.table
+            table.classement
+                thead
+                    tr
+                        th(class='thRank') Rank
+                        th(class='thName') Name
+                        th(class='thTime') Total Time
+                        th(class='thClose') Number of Maps Completed
+                        th(class='thUmap') Unfinished map
+    script(src="/js/script.js")

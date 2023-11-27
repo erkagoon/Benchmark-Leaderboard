@@ -1,0 +1,103 @@
+body {
+    background-image: url('/img/background.jpg');
+    font-family: Arial, sans-serif;
+    color: #fff;
+    padding: 20px;
+    font-family: 'Lato Bold';
+    font-weight: bold;
+}
+
+.global {
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    max-height: 800px;
+    overflow-y: auto;
+    width: 80%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: -1px;
+    background-color: rgb(75, 73, 73);
+    font-size: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+.thRank, .thTime, .thClose, .Umap {
+    text-align: center;
+}
+
+thead {
+    background-color: black;
+    position: sticky;
+    top: -1px;
+}
+
+tr:nth-child(even) {
+    background-color: #30313188;
+}
+
+tr {
+    cursor: pointer;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+th {
+    color: #fff;
+    font-size: 1.1em;
+}
+
+td {
+    color: #e0f7fa;
+}
+
+td.tdclose {
+    text-align: center;
+}
+
+td.maps {
+    text-align: left;
+}
+.tdRank, .tdTime, .tdClose, .tdUmap {
+    text-align: center;
+}
+
+td:first-child {
+    font-weight: bold;
+    color: #ffeb3b;
+}
+
+.maps-content {
+    display: none;
+}
+
+.maps-toggle {
+    cursor: pointer;
+}
+
+#loader {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-100%);
+}
+
+#spanLoader {
+    position: absolute;
+    top: 60%;
+    transform: translateY(-100%);
+    font-size: 25px;
+    border-radius: 5px;
+    background-color: black;
+    padding:10px;
+}
