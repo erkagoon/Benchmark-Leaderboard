@@ -145,14 +145,31 @@ app.get('/classement', async (req, res) => {
                 if (mapResponse.data && mapResponse.data.data && mapResponse.data.data.map) {
                     return mapResponse.data.data.map;
                 } else {
+                    // Il peut être utile de logger la réponse pour le débogage
+                    console.error('Réponse inattendue:', mapResponse.data);
                     throw new Error('La réponse ne contient pas les données attendues');
                 }
             } catch (error) {
                 console.error('Erreur lors de la récupération des détails de la carte :', error);
+                // Log more error details
+                if (error.response) {
+                    // La requête a été faite et le serveur a répondu avec un statut hors de la plage 2xx
+                    console.error('Data:', error.response.data);
+                    console.error('Status:', error.response.status);
+                    console.error('Headers:', error.response.headers);
+                } else if (error.request) {
+                    // La requête a été faite mais aucune réponse n'a été reçue
+                    console.error('Request:', error.request);
+                } else {
+                    // Une erreur s'est produite lors de la mise en place de la requête
+                    console.error('Message:', error.message);
+                }
+                console.error('Config:', error.config);
                 // Retournez `null` ou une autre valeur appropriée qui indiquera une erreur lors du traitement de cette carte
                 return null;
             }
         });
+        
         
 
         // Attendre que toutes les promesses soient résolues
