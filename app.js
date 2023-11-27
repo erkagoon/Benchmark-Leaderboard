@@ -120,7 +120,7 @@ app.get('/classement', async (req, res) => {
             try {
                 const mapResponse = await axios.post('https://obstacle.titlepack.io/api/graphql', {
                     query: `{
-                        map(gameId: "${map.mapId}") {
+                        map(gameId: "k8pnz4nrME6CuBRWvk2THdlSMrl_benchmark") {
                           name
                           gameId
                           records {
