@@ -123,14 +123,9 @@ app.get('/classement', async (req, res) => {
                         map(gameId: "${map.mapId}") {
                           name
                           gameId
-                          player {
-                            login
-                            name
-                          }
                           records {
                             rank
                             time
-                            recordDate
                             player {
                               login
                               name
@@ -142,7 +137,8 @@ app.get('/classement', async (req, res) => {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
-                    }
+                    },
+                    timeout: 100000
                 });
         
                 // Vérifiez si `data` et `map` sont présents
