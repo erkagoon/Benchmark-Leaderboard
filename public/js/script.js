@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => { 
             const peoples = data.peoples;
-            console.log(peoples);
+            
             function createTableWithData(peoples) {
                 const tableBody = document.createElement('tbody');
             
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             acc[map.mapRank].push(map);
                             return acc;
                         }, {});
-                        console.log(mapsByRank);
+
                         const rankOrder = ['grandmaster', 'master', 'diamond', 'platinum', 'gold', 'silver', 'bronze'];
 
                         rankOrder.forEach(rank => {
