@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             acc[map.mapRank].push(map);
                             return acc;
                         }, {});
-                    
+                        console.log(mapsByRank);
                         const rankOrder = ['grandmaster', 'master', 'diamond', 'platinum', 'gold', 'silver', 'bronze'];
 
                         rankOrder.forEach(rank => {
