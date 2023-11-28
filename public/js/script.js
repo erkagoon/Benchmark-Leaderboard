@@ -61,8 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                         // Définir l'ordre des rangs
                         const rankOrder = ['grandmaster', 'master', 'diamond', 'platinum', 'gold', 'silver', 'bronze'];
-                    
-                        console.table(mapsByRank);
+
                         // Trier et ajouter les éléments de liste pour chaque rang selon l'ordre défini
                         rankOrder.forEach(rank => {
                             if (mapsByRank[rank] && mapsByRank[rank].length > 0) {
