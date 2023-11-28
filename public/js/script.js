@@ -59,26 +59,22 @@ document.addEventListener('DOMContentLoaded', function() {
                             return acc;
                         }, {});
                     
-                        // Définir l'ordre des rangs
                         const rankOrder = ['grandmaster', 'master', 'diamond', 'platinum', 'gold', 'silver', 'bronze'];
 
-                        // Trier et ajouter les éléments de liste pour chaque rang selon l'ordre défini
                         rankOrder.forEach(rank => {
                             if (mapsByRank[rank] && mapsByRank[rank].length > 0) {
                                 const ulMap = document.createElement('ul');
                                 ulMap.className = 'maps-list';
                     
-                                // Créer un élément span pour le titre du rang
                                 const spanRankTitle = document.createElement('span');
                                 spanRankTitle.className = 'rank-title';
-                                spanRankTitle.textContent = rank.charAt(0).toUpperCase() + rank.slice(1); // Capitalize the rank
+                                spanRankTitle.textContent = rank.charAt(0).toUpperCase() + rank.slice(1);
                                 ulMap.appendChild(spanRankTitle);
                     
-                                // Ajouter les maps pour le rang courant
                                 mapsByRank[rank].forEach(map => {
                                     const liMap = document.createElement('li');
                                     liMap.className = 'map-name';
-                                    liMap.innerHTML = map.mapName; // Assurez-vous que le contenu de map.mapName est sécurisé
+                                    liMap.innerHTML = map.mapName;
                                     ulMap.appendChild(liMap);
                                 });
                     
