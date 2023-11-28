@@ -26,6 +26,20 @@ table {
     font-size: 20px;
 }
 
+.maps-content ul {
+    padding-inline-start: 0;
+}
+
+.maps-content ul li {
+    margin-left: 40px;
+}
+
+.rank-title {
+    list-style: none;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 th, td {
     padding: 8px;
     text-align: left;

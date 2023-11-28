@@ -53,16 +53,45 @@ document.addEventListener('DOMContentLoaded', function() {
                     divMapsContent.dataset.index = index;
             
                     if (people.maps.length > 0) {
-                        people.maps.forEach(map => {
-                            const li = document.createElement('li');
-                            li.innerHTML = map.mapName;
-                            divMapsContent.appendChild(li);
+                        const mapsByRank = people.maps.reduce((acc, map) => {
+                            acc[map.mapRank] = acc[map.mapRank] || [];
+                            acc[map.mapRank].push(map);
+                            return acc;
+                        }, {});
+                    
+                        // Définir l'ordre des rangs
+                        const rankOrder = ['grandmaster', 'master', 'diamond', 'platinum', 'gold', 'silver', 'bronze'];
+                    
+                        console.table(mapsByRank);
+                        // Trier et ajouter les éléments de liste pour chaque rang selon l'ordre défini
+                        rankOrder.forEach(rank => {
+                            if (mapsByRank[rank] && mapsByRank[rank].length > 0) {
+                                const ulMap = document.createElement('ul');
+                                ulMap.className = 'maps-list';
+                    
+                                // Créer un élément span pour le titre du rang
+                                const spanRankTitle = document.createElement('span');
+                                spanRankTitle.className = 'rank-title';
+                                spanRankTitle.textContent = rank.charAt(0).toUpperCase() + rank.slice(1); // Capitalize the rank
+                                ulMap.appendChild(spanRankTitle);
+                    
+                                // Ajouter les maps pour le rang courant
+                                mapsByRank[rank].forEach(map => {
+                                    const liMap = document.createElement('li');
+                                    liMap.className = 'map-name';
+                                    liMap.innerHTML = map.mapName; // Assurez-vous que le contenu de map.mapName est sécurisé
+                                    ulMap.appendChild(liMap);
+                                });
+                    
+                                divMapsContent.appendChild(ulMap);
+                            }
                         });
                     } else {
-                        const li = document.createElement('li');
-                        li.textContent = 'All maps are completed';
-                        divMapsContent.appendChild(li);
-                    }
+                        const liCompleted = document.createElement('li');
+                        liCompleted.textContent = 'All maps are completed';
+                        divMapsContent.appendChild(liCompleted);
+                    }                                      
+                    
             
                     tdMaps.appendChild(divMapsContent);
                     tr.appendChild(tdMaps);

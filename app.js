@@ -26,6 +26,18 @@ function convertTimestampToTime(timestamp) {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
+function determineMapRank(mapId) {
+    if (mapBronze.includes(mapId)) return 'bronze';
+    if (mapSilver.includes(mapId)) return 'silver';
+    if (mapGold.includes(mapId)) return 'gold';
+    if (mapPlatinum.includes(mapId)) return 'platinum';
+    if (mapDiamond.includes(mapId)) return 'diamond';
+    if (mapMaster.includes(mapId)) return 'master';
+    if (mapGrandmaster.includes(mapId)) return 'grandmaster';
+    
+    return 'unknown'; 
+}
+
 function getCategory(mapsId) {
     // Vérifier si le joueur n'a pas terminé toutes les cartes du rang le plus bas (Bronze)
     if (mapBronze.some(id => mapsId.includes(id))) {
@@ -217,6 +229,10 @@ app.get('/classement', async (req, res) => {
             const numberMapFinished = allMaps.length - mapIds.length;
             const rank = getCategory(mapIds);
             
+            data.mapNocomp.forEach(map => {
+                map.mapRank = determineMapRank(map.mapId);
+            });
+
             return {
                 login,
                 rank: rank,
