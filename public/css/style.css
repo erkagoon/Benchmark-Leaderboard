@@ -52,6 +52,9 @@ h1 {
         h1 {
             font-size: 2em;
         }
+        html {
+            height: 100dvh;
+        }
     }
 
 table {
