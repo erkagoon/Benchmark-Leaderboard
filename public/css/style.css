@@ -87,7 +87,7 @@ th, td {
     text-align: left;
 }
 
-.thRank, .thTime, .thClose, .Umap {
+.thRank, .thTime, .thClose, .Umap, .thTier {
     text-align: center;
 }
 
