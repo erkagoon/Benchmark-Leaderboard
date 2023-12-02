@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
                     // Colonne Name
                     const tdName = document.createElement('td');
-                    tdName.innerHTML = `${people.name} (${people.rank})`;
+                    tdName.innerHTML = `${people.name}`;
                     tr.appendChild(tdName);
             
                     // Colonne Time
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const tdMaps = document.createElement('td');
                     tdMaps.className = 'tdUmap';
                     tdMaps.className = 'maps';
-                    
+
                     const spanFirstMap = document.createElement('span');
                     spanFirstMap.className = 'first-map';
                     spanFirstMap.textContent = 'Click to expand';
@@ -87,11 +87,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         liCompleted.textContent = 'All maps are completed';
                         divMapsContent.appendChild(liCompleted);
                     }                                      
-                    
-            
+
                     tdMaps.appendChild(divMapsContent);
                     tr.appendChild(tdMaps);
             
+                    // Colonne tier
+                    const tdThier = document.createElement('td');
+                    tdThier.className = 'tdThier';
+                    tdThier.textContent = `${people.rank}`;
+                    tr.appendChild(tdThier);
+                    
                     tableBody.appendChild(tr);
                 });
             
