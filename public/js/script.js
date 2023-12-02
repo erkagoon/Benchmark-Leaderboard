@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const sortState = {};
+    const tierOrder = ['Unranked', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grandmaster'];
+
+    function convertTimeToSeconds(time) {
+        const parts = time.split(':');
+        let seconds = 0;
+        if (parts.length === 3) {
+            seconds += parseInt(parts[0]) * 3600; 
+            seconds += parseInt(parts[1]) * 60;   
+            seconds += parseInt(parts[2]);
+        }
+        return seconds;
+    }
+
     function determineColorTier(tier) {
         if (tier==='Bronze') return '#cd7f32';
         if (tier==='Silver') return '#c0c0c0';
@@ -8,6 +22,47 @@ document.addEventListener('DOMContentLoaded', function() {
         if (tier==='Master') return '#aa00ff';
         if (tier==='Grandmaster') return '#ff0000';
         return 'grey';
+    }
+
+    function sortTable(columnIndex, numeric, special = null) {
+        const table = document.querySelector('.classement');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+    
+        // Déterminer la direction du tri
+        if (sortState[columnIndex] === 'ascending') {
+            sortState[columnIndex] = 'descending';
+        } else {
+            sortState[columnIndex] = 'ascending';
+        }
+    
+        rows.sort((rowA, rowB) => {
+            let cellA = rowA.querySelectorAll('td')[columnIndex].textContent.trim();
+            let cellB = rowB.querySelectorAll('td')[columnIndex].textContent.trim();
+    
+            if (special === 'time') {
+                cellA = convertTimeToSeconds(cellA);
+                cellB = convertTimeToSeconds(cellB);
+            } else if (special === 'maps') {
+                cellA = parseInt(cellA.split('/')[0]);
+                cellB = parseInt(cellB.split('/')[0]);
+            } else if (special === 'tier') {
+                cellA = tierOrder.indexOf(cellA);
+                cellB = tierOrder.indexOf(cellB);
+            } else if (numeric) {
+                cellA = parseFloat(cellA);
+                cellB = parseFloat(cellB);
+            }
+    
+            if (numeric || special) {
+                return sortState[columnIndex] === 'ascending' ? cellA - cellB : cellB - cellA;
+            } else {
+                return sortState[columnIndex] === 'ascending' ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            }
+        });
+    
+        // Ajouter les lignes triées au tbody
+        rows.forEach(row => tbody.appendChild(row));
     }
 
     fetch('/classement')
@@ -141,6 +196,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const spanLoader = document.getElementById('spanLoader');
             loader.remove();
             spanLoader.remove();
+
+            // Ajouter un écouteur d'événements à chaque en-tête de colonne
+            const headers = document.querySelectorAll('.classement thead th');
+            headers.forEach((header, index) => {
+                header.addEventListener('click', () => {
+                    const isNumeric = header.classList.contains('thRank');
+                    const isMaps = header.classList.contains('thClose');
+                    const isTier = header.classList.contains('thTier');
+                    const isName = header.classList.contains('thName');
+                    const isTime = header.classList.contains('thTime');
+                    sortTable(index, isNumeric, isMaps ? 'maps' : isTier ? 'tier' : isTime ? 'time' : isName ? null : null);
+                });
+            });
         })
         .catch(error => {
             console.error('Erreur lors de la récupération des données:', error);
