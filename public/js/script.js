@@ -176,7 +176,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             document.querySelectorAll('tbody tr').forEach(function(row) {
                 row.addEventListener('click', function() {
-                    var index = Array.from(row.parentNode.children).indexOf(row);
+                    var mapsElement = row.querySelector('.maps');
+                    var mapsContentElement = mapsElement.querySelector('.maps-content');
+
+                    var index = mapsContentElement.dataset.index;
+
                     var content = document.querySelector('.maps-content[data-index="' + index + '"]');
                     var firstMap = row.querySelector('.first-map');
                     
