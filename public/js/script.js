@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
+    function determineColorTier(tier) {
+        if (tier==='Bronze') return '#cd7f32';
+        if (tier==='Silver') return '#c0c0c0';
+        if (tier==='Gold') return '#ffd700';
+        if (tier==='Platinum') return '#b0c4de';
+        if (tier==='Diamond') return '#b9f2ff';
+        if (tier==='Master') return '#aa00ff';
+        if (tier==='Grandmaster') return '#ff0000';
+        return 'grey';
+    }
+
     fetch('/classement')
         .then(response => {
             if (!response.ok) {
@@ -95,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const tdThier = document.createElement('td');
                     tdThier.className = 'tdThier';
                     tdThier.textContent = `${people.rank}`;
+                    tdThier.style = `color: ${determineColorTier(people.rank)}`;
                     tr.appendChild(tdThier);
                     
                     tableBody.appendChild(tr);
