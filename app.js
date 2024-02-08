@@ -104,11 +104,13 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
 app.get('/', async (req, res) => {
-    res.render('index', { title: 'Benchmark Leaderboard' });
+    // res.render('index', { title: 'Benchmark Leaderboard' });
+    res.render('construction', { title: 'Site en construction', faute:'Ahmad'});
 });
 
 app.get('/classement', async (req, res) => {
     try {
+        console.log('ici')
         const response = await axios.post('https://obstacle.titlepack.io/api/graphql', {
             query: `{
                 mappack(mappackId: "39") {
@@ -158,6 +160,7 @@ app.get('/classement', async (req, res) => {
         
                 // Vérifiez si `data` et `map` sont présents
                 if (mapResponse.data && mapResponse.data.data && mapResponse.data.data.map) {
+                    console.log(mapResponse.data)
                     return mapResponse.data.data.map;
                 } else {
                     // Il peut être utile de logger la réponse pour le débogage
